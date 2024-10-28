@@ -62,9 +62,6 @@ function App() {
           Task name
         </label>
       </div>
-      {/* <span className="count-tasks">
-        {localStorage.getItem("countUnfinishedTasks")}
-      </span> */}
       <List tasks={tasks} setTasks={setTasks} taskTime={taskTime} />
     </div>
   );
