@@ -42,7 +42,17 @@ function App() {
     const month = date.getMonth();
     const day = date.getDate();
     const year = date.getFullYear();
-    return `${hours}:${minutes}:${seconds} (${day}.${month}.${year})`;
+
+    function addZero(i) {
+      if (i < 10) {
+        i = "0" + i;
+      }
+      return i;
+    }
+
+    return `${addZero(hours)}:${addZero(minutes)}:${addZero(
+      seconds
+    )} (${addZero(day)}.${addZero(month)}.${year})`;
   };
 
   return (
@@ -62,7 +72,7 @@ function App() {
           Task name
         </label>
       </div>
-      <List tasks={tasks} setTasks={setTasks} taskTime={taskTime} />
+      <List tasks={tasks} setTasks={setTasks} />
     </div>
   );
 }

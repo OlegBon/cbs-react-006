@@ -5,6 +5,9 @@ const Item = ({ title, id, status, time, tasks, setTasks }) => {
   const [checked, setChecked] = useState(status);
   const classes = ["todo"];
 
+  const [isEdit, setIsEdit] = useState(false);
+  const [taskEdit, setTaskEdit] = useState(title);
+
   if (checked) {
     classes.push("status");
   }
@@ -24,21 +27,57 @@ const Item = ({ title, id, status, time, tasks, setTasks }) => {
     setTasks([...tasks.filter((item) => item.id !== id)]);
   };
 
-  return (
-    <li className={classes.join(" ")}>
-      <div>
-        <label>
-          <input type="checkbox" checked={checked} onChange={onUpdateStatus} />
-          <span>
-            {title} {time}
-          </span>
-        </label>
-        <i className="material-icons red-text" onClick={onRemoveItem}>
-          X
-        </i>
-      </div>
-    </li>
-  );
+  const onSaveItem = () => {
+    const modifedTasks = tasks.map((item) => {
+      if (item.id === id) {
+        return { ...item, title: taskEdit };
+      }
+      return item;
+    });
+    setTasks(modifedTasks);
+    setIsEdit(false);
+  };
+
+  const onEditItem = (e) => {
+    setTaskEdit(e.target.value);
+  };
+
+  if (isEdit) {
+    return (
+      <li className={classes.join(" ")}>
+        <div>
+          <label>
+            <input type="text" value={taskEdit} onChange={onEditItem} />
+          </label>
+          <button onClick={onSaveItem}>Save</button>
+          <i className="material-icons red-text" onClick={onRemoveItem}>
+            X
+          </i>
+        </div>
+      </li>
+    );
+  } else {
+    return (
+      <li className={classes.join(" ")}>
+        <div>
+          <label>
+            <input
+              type="checkbox"
+              checked={checked}
+              onChange={onUpdateStatus}
+            />
+            <span>
+              {title} {time}
+            </span>
+          </label>
+          <button onClick={() => setIsEdit(true)}>Edit</button>
+          <i className="material-icons red-text" onClick={onRemoveItem}>
+            X
+          </i>
+        </div>
+      </li>
+    );
+  }
 };
 
 Item.propTypes = {

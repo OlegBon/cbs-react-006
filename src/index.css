@@ -39,3 +39,7 @@ span {
 .todo i {
   z-index: 10;
 }
+
+.todo button {
+  margin-right: 40px;
+}
